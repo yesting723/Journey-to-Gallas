@@ -1,2 +1,2 @@
 # Journey-to-Gallas
-A wonderful holiday in a peaceful island.
+A wonderful holiday in a peaceful land.
