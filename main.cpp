@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include <SDL.h> 
+#define PLAYERIMG "images/player1.bmp"
+#undef main
 using namespace std;
 
 /*
@@ -10,6 +12,8 @@ using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+SDL_Texture* texture = NULL;
+SDL_Surface* surface = NULL;
 int px,py;
 
 void SDL_DrawFilledRect(SDL_Renderer* renderer,int x,int y,int w,int h)
@@ -76,10 +80,15 @@ void SDL_DrawPavement4(SDL_Renderer* renderer,int x,int y)
 	//位于道路右侧 
 }
 
-void DrawPlayer(SDL_Renderer* renderer,int x,int y)
+void DrawPlayer(SDL_Renderer* renderer,int x,int y,int playerid)
 {
-	SDL_SetRenderDrawColor(renderer,255,255,255,255);
-	SDL_DrawFilledRect(renderer,x,y,20,40);
+	if(playerid==1)
+	{
+		surface=SDL_LoadBMP(PLAYERIMG);//在surface加载bmp图片 
+		texture=SDL_CreateTextureFromSurface(renderer,surface);//从surface创建贴图纹理 
+		SDL_Rect dstrect = {x,y,20,40};
+		SDL_RenderCopy(renderer,texture,NULL,&dstrect);
+	}//player1形象是一个中/青年男子 
 }
 
 void BaseInit()
@@ -130,42 +139,48 @@ void BaseInit()
 
 void init(int areaid)
 {
+	SDL_SetRenderDrawColor(renderer,0,0,0,255);
+	SDL_RenderClear(renderer);
 	BaseInit();
 }
 
 void act(int areaid)
 {
 	int px,py;
-	px=311;
+	px=312;
 	py=296;
 	SDL_Event event;
 	while(SDL_WaitEvent(&event))
 	{
 		SDL_RenderPresent(renderer);
 		init(areaid);
-		DrawPlayer(renderer,px,py);
+		bool f1 = py<=295&&(!(px>=310&&(px+20)<=440)&&!(px>=840&&(px+20)<=970));
+		bool f2 = py+40>=425&&(!(px>=310&&(px+20)<=440)&&!(px>=840&&(px+20)<=970));
+		bool f3 = ((px<=310)||(px<=840&&(px+20)>=440))&&!(py>=295&&(py+40)<=425);
+		bool f4 = (((px+20)>=440)||(px<=970&&(px+20)>=840))&&!(py>=295&&(py+40)<=425);
+		DrawPlayer(renderer,px,py,1);
 		switch(event.type)
 		{
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym==SDLK_w||event.key.keysym.sym==SDLK_UP) 
+				if((event.key.keysym.sym==SDLK_w||event.key.keysym.sym==SDLK_UP)&&!f1&&!(py-2<0)) 
 				{
+					SDL_Delay(10);
 					py-=2;
-					SDL_Delay(20);
 				}
-				else if(event.key.keysym.sym==SDLK_s||event.key.keysym.sym==SDLK_DOWN)
+				else if((event.key.keysym.sym==SDLK_s||event.key.keysym.sym==SDLK_DOWN)&&!f2&&!(py+2+40>720))
 				{
+					SDL_Delay(10);
 					py+=2;
-					SDL_Delay(20);
 				}
-				else if(event.key.keysym.sym==SDLK_a||event.key.keysym.sym==SDLK_LEFT)
+				else if((event.key.keysym.sym==SDLK_a||event.key.keysym.sym==SDLK_LEFT)&&!f3&&!(px-2<0))
 				{
+					SDL_Delay(10);					
 					px-=2;
-					SDL_Delay(20);
 				}
-				else if(event.key.keysym.sym==SDLK_d||event.key.keysym.sym==SDLK_RIGHT)
+				else if((event.key.keysym.sym==SDLK_d||event.key.keysym.sym==SDLK_RIGHT)&&!f4&&!(px+2+20>1280))
 				{
+					SDL_Delay(10);
 					px+=2;
-					SDL_Delay(20);
 				}
 		}
 	} 
@@ -178,6 +193,7 @@ int main(int argc, char* args[])
 	SDL_Init(SDL_INIT_VIDEO);
 	window = SDL_CreateWindow("Journey to Gallas",100,100,640,480,SDL_WINDOW_MAXIMIZED);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	
 	
 	act(1);
 	SDL_RenderPresent(renderer);
