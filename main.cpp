@@ -10,6 +10,7 @@ using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+int px,py;
 
 void SDL_DrawFilledRect(SDL_Renderer* renderer,int x,int y,int w,int h)
 {
@@ -75,6 +76,12 @@ void SDL_DrawPavement4(SDL_Renderer* renderer,int x,int y)
 	//位于道路右侧 
 }
 
+void DrawPlayer(SDL_Renderer* renderer,int x,int y)
+{
+	SDL_SetRenderDrawColor(renderer,255,255,255,255);
+	SDL_DrawFilledRect(renderer,x,y,20,40);
+}
+
 void BaseInit()
 {
 	SDL_SetRenderDrawColor(renderer,100,255,100,255);
@@ -111,20 +118,68 @@ void BaseInit()
 	SDL_DrawFilledRect(renderer,955,312,16,4);
 	SDL_DrawFilledRect(renderer,955,406,16,4);
 	//修整人行道重叠部分（纵向道路2） 
+	/*
+	1280*720
+	路宽：130
+	1020*590
+	
+	310*295 400*315 310*295
+	310*295 400*315 310*295 
+	*/ 
 }
 
-void act0101()
+void init(int areaid)
 {
 	BaseInit();
 }
 
+void act(int areaid)
+{
+	int px,py;
+	px=311;
+	py=296;
+	SDL_Event event;
+	while(SDL_WaitEvent(&event))
+	{
+		SDL_RenderPresent(renderer);
+		init(areaid);
+		DrawPlayer(renderer,px,py);
+		switch(event.type)
+		{
+			case SDL_KEYDOWN:
+				if(event.key.keysym.sym==SDLK_w||event.key.keysym.sym==SDLK_UP) 
+				{
+					py-=2;
+					SDL_Delay(20);
+				}
+				else if(event.key.keysym.sym==SDLK_s||event.key.keysym.sym==SDLK_DOWN)
+				{
+					py+=2;
+					SDL_Delay(20);
+				}
+				else if(event.key.keysym.sym==SDLK_a||event.key.keysym.sym==SDLK_LEFT)
+				{
+					px-=2;
+					SDL_Delay(20);
+				}
+				else if(event.key.keysym.sym==SDLK_d||event.key.keysym.sym==SDLK_RIGHT)
+				{
+					px+=2;
+					SDL_Delay(20);
+				}
+		}
+	} 
+}
+
 int main(int argc, char* args[])
 {
+	px=311;
+	py=296;
 	SDL_Init(SDL_INIT_VIDEO);
 	window = SDL_CreateWindow("Journey to Gallas",100,100,640,480,SDL_WINDOW_MAXIMIZED);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	
-	act0101();
+	act(1);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(3000);
 	
