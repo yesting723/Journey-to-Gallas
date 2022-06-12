@@ -10,7 +10,7 @@
 
 注：上述剧情暂未在游戏中实现<br />
 <br /><br />
-This is a casual RPG game developed by yesting723 (me) and it is still in development.
+This is a casual RPG game developed by yesting723 (me) and it is still in development.<br />
 2022.6.1: Started development of the control system.<br />
 2022.6.8: Added SDL_Image library for image improvements.<br /><br />
 Currently known bugs:
