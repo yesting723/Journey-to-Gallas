@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
-#include <SDL.h> 
+#include <SDL2/SDL.h> 
+#include <SDL2/SDL_image.h> 
 #define PLAYERIMG "images/player1.bmp"
-#undef main
 using namespace std;
 
 /*
@@ -93,7 +93,7 @@ void DrawPlayer(SDL_Renderer* renderer,int x,int y,int playerid)
 
 void BaseInit()
 {
-	SDL_SetRenderDrawColor(renderer,100,255,100,255);
+	SDL_SetRenderDrawColor(renderer,255,255,255,255);
 	SDL_DrawFilledRect(renderer,0,0,1280,720);
 	for(int i=0; i<=1200; i+=80)
 	{
@@ -154,37 +154,42 @@ void act(int areaid)
 	{
 		SDL_RenderPresent(renderer);
 		init(areaid);
-		bool f1 = py<=295&&(!(px>=310&&(px+20)<=440)&&!(px>=840&&(px+20)<=970));
-		bool f2 = py+40>=425&&(!(px>=310&&(px+20)<=440)&&!(px>=840&&(px+20)<=970));
-		bool f3 = ((px<=310)||(px<=840&&(px+20)>=440))&&!(py>=295&&(py+40)<=425);
-		bool f4 = (((px+20)>=440)||(px<=970&&(px+20)>=840))&&!(py>=295&&(py+40)<=425);
+		bool fa = py>=296&&py+40<426;
+		bool fb = px>=311&&px+20<441;
+		bool fc = px>=841&&px+20<971; 
 		DrawPlayer(renderer,px,py,1);
+		//!(py>=296&&py+40<426)&&!(((px>=311&&px+20<441)||(px>=841&&px+20<971)))
 		switch(event.type)
 		{
 			case SDL_KEYDOWN:
-				if((event.key.keysym.sym==SDLK_w||event.key.keysym.sym==SDLK_UP)&&!f1&&!(py-2<0)) 
-				{
-					SDL_Delay(10);
+				if((event.key.keysym.sym==SDLK_w||event.key.keysym.sym==SDLK_UP)&&!(!(py-2>=296&&py-2+40<426)&&!(((px>=311&&px+20<441)||(px>=841&&px+20<971))))) 
+				{	
 					py-=2;
+					if(py<0) py+=2;
+					else continue;
 				}
-				else if((event.key.keysym.sym==SDLK_s||event.key.keysym.sym==SDLK_DOWN)&&!f2&&!(py+2+40>720))
-				{
-					SDL_Delay(10);
+				else if((event.key.keysym.sym==SDLK_s||event.key.keysym.sym==SDLK_DOWN)&&!(!(py+2>=296&&py+2+40<426)&&!(((px>=311&&px+20<441)||(px>=841&&px+20<971)))))
+				{	
 					py+=2;
+					if(py+40>720) py-=2;
+					else continue;
 				}
-				else if((event.key.keysym.sym==SDLK_a||event.key.keysym.sym==SDLK_LEFT)&&!f3&&!(px-2<0))
-				{
-					SDL_Delay(10);					
+				else if((event.key.keysym.sym==SDLK_a||event.key.keysym.sym==SDLK_LEFT)&&!(!(py>=296&&py+40<426)&&!(((px-2>=311&&px-2+20<441)||(px-2>=841&&px-2+20<971)))))
+				{						
 					px-=2;
+					if(px<0) px+=2;
+					else continue;
 				}
-				else if((event.key.keysym.sym==SDLK_d||event.key.keysym.sym==SDLK_RIGHT)&&!f4&&!(px+2+20>1280))
+				else if((event.key.keysym.sym==SDLK_d||event.key.keysym.sym==SDLK_RIGHT)&&!(!(py>=296&&py+40<426)&&!(((px+2>=311&&px+2+20<441)||(px+2>=841&&px+2+20<971)))))
 				{
-					SDL_Delay(10);
 					px+=2;
+					if(px+20>1280) px-=2;
+					else continue;
 				}
 		}
 	} 
 }
+
 
 int main(int argc, char* args[])
 {
