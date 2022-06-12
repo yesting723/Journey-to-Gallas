@@ -91,6 +91,15 @@ void DrawPlayer(SDL_Renderer* renderer,int x,int y,int playerid)
 	}//player1形象是一个中/青年男子 
 }
 
+void QuitGame()
+{
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+} 
+
 void BaseInit()
 {
 	SDL_SetRenderDrawColor(renderer,255,255,255,255);
@@ -186,6 +195,7 @@ void act(int areaid)
 					if(px+20>1280) px-=2;
 					else continue;
 				}
+				else if(event.key.keysym.sym==SDLK_ESCAPE) QuitGame();
 		}
 	} 
 }
@@ -201,8 +211,6 @@ int main(int argc, char* args[])
 	
 	
 	act(1);
-	SDL_RenderPresent(renderer);
-	SDL_Delay(3000);
 	
 	
 	//退出 
