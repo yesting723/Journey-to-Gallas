@@ -5,18 +5,8 @@
 2022.6.12: 完成操控系统，并添加了ESC键退出的功能。<br /><br />
 目前已知的问题：<br />
 - 玩家角色绘制时会显示白色背景，目前准备使用SDL_Image库修复。
+- 显示器分辨率低于1280*720的电脑在渲染时会出现问题
 - ---
 一年暑假，你正坐在前往欧洲的飞机上，忽然，飞机遭遇了台风，不得不迫降在海上，所幸的是无人伤亡。你坐在橡皮艇上漂泊了一天一夜，在第二天，你的眼前出现了一座小岛！当你来到岛上，你发现这里的居民都十分友善，除了本土居民，还有许多来自世界各地旅行者，在这里，你将度过一个宁静的假期。<br /><br />
 
 注：上述剧情暂未在游戏中实现<br />
-<br /><br />
-This is a casual RPG game developed by yesting723 (me) and it is still in development.<br />
-2022.6.1: Started development of the control system.<br />
-2022.6.8: Added SDL_Image library for image improvements.<br /><br />
-Currently known bugs:
-- The player character draws with a white background and is currently ready to be fixed using the SDL_Image library.
-- ---
-One summer, you were sitting on a plane to Europe when suddenly the plane suffered a typhoon and had to land at sea, but fortunately there were no casualties. You sat in a rubber boat and drifted for a day and a night, and the next day, a small island appeared in front of your eyes! When you come to the island, you will find that the inhabitants are very friendly, in addition to the native residents, there are many travelers from all over the world, here you will spend a peaceful holiday.
-<br /><br />
-Note: The above plot has not been implemented in the game
-<br /><br /><br />
