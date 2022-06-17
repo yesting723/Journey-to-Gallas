@@ -1,0 +1,3 @@
+2022.6.1: Started development of the control system
+2022.6.8: Added SDL_Image library for image improvements.
+2022.6.12: Completed the control system and added the ESC key exit function.
