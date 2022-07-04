@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
-#include <SDL2/SDL.h> 
-#include <SDL2/SDL_image.h> 
-#define PLAYERIMG "images/player1.bmp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+#define PLAYERIMG "images/player1.png"
 using namespace std;
 
 /*
@@ -13,7 +13,6 @@ using namespace std;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 SDL_Texture* texture = NULL;
-SDL_Surface* surface = NULL;
 int px,py;
 
 void SDL_DrawFilledRect(SDL_Renderer* renderer,int x,int y,int w,int h)
@@ -80,20 +79,80 @@ void SDL_DrawPavement4(SDL_Renderer* renderer,int x,int y)
 	//位于道路右侧 
 }
 
-void DrawPlayer(SDL_Renderer* renderer,int x,int y,int playerid)
+void DrawPlayer(SDL_Renderer* renderer,int x,int y,int p)
 {
-	if(playerid==1)
+	if(p==1)
 	{
-		surface=SDL_LoadBMP(PLAYERIMG);//在surface加载bmp图片 
-		texture=SDL_CreateTextureFromSurface(renderer,surface);//从surface创建贴图纹理 
-		SDL_Rect dstrect = {x,y,20,40};
-		SDL_RenderCopy(renderer,texture,NULL,&dstrect);
-	}//player1形象是一个中/青年男子 
+		SDL_SetRenderDrawColor(renderer,0,0,0,255);
+		SDL_RenderDrawLine(renderer,x+8,y,x+11,y);
+		SDL_DrawFilledRect(renderer,x+6,y+1,8,2); 
+		SDL_RenderDrawLine(renderer,x+8,y+3,x+13,y+3);
+		SDL_RenderDrawLine(renderer,x+5,y+3,x+5,y+7);
+		SDL_RenderDrawLine(renderer,x+14,y+3,x+14,y+7);
+		SDL_RenderDrawLine(renderer,x+6,y+8,x+6,y+9);
+		SDL_RenderDrawLine(renderer,x+13,y+8,x+13,y+9);
+		SDL_RenderDrawLine(renderer,x+5,y+10,x+14,y+10);
+		SDL_RenderDrawLine(renderer,x+4,y+10,x+1,y+13);
+		SDL_RenderDrawLine(renderer,x+15,y+10,x+18,y+13);
+		SDL_RenderDrawLine(renderer,x+1,y+14,x+1,y+19);
+		SDL_RenderDrawLine(renderer,x+18,y+14,x+18,y+19);
+		SDL_RenderDrawLine(renderer,x+5,y+11,x+5,y+19);
+		SDL_RenderDrawLine(renderer,x+14,y+11,x+14,y+19);
+		SDL_RenderDrawLine(renderer,x+1,y+20,x+18,y+20);
+		SDL_RenderDrawLine(renderer,x+2,y+21,x+2,y+23);
+		SDL_RenderDrawLine(renderer,x+2,y+23,x+3,y+23);
+		SDL_RenderDrawLine(renderer,x+17,y+21,x+17,y+23);
+		SDL_RenderDrawLine(renderer,x+16,y+23,x+17,y+23);
+		SDL_RenderDrawLine(renderer,x+4,y+21,x+4,y+28);
+		SDL_RenderDrawLine(renderer,x+3,y+29,x+3,y+35);
+		SDL_RenderDrawLine(renderer,x+15,y+21,x+15,y+28);
+		SDL_RenderDrawLine(renderer,x+16,y+29,x+16,y+35);
+		SDL_DrawFilledRect(renderer,x+9,y+23,2,7);
+		SDL_RenderDrawLine(renderer,x+8,y+30,x+8,y+35);
+		SDL_RenderDrawLine(renderer,x+12,y+30,x+12,y+35);
+		SDL_DrawFilledRect(renderer,x+1,y+36,7,4);
+		SDL_DrawFilledRect(renderer,x+12,y+36,7,4);
+		
+		SDL_SetRenderDrawColor(renderer,200,200,200,255);
+		SDL_DrawFilledRect(renderer,x+6,y+11,8,9);
+		SDL_DrawFilledRect(renderer,x+2,y+13,3,7);
+		SDL_DrawFilledRect(renderer,x+15,y+13,3,7);
+		SDL_RenderDrawLine(renderer,x+3,y+12,x+4,y+12);
+		SDL_RenderDrawLine(renderer,x+4,y+11,x+4,y+12);
+		SDL_RenderDrawLine(renderer,x+15,y+12,x+16,y+12);
+		SDL_RenderDrawLine(renderer,x+15,y+11,x+15,y+12);
+		
+		SDL_SetRenderDrawColor(renderer,87,47,23,255);
+		SDL_DrawFilledRect(renderer,x+5,y+21,4,9);
+		SDL_DrawFilledRect(renderer,x+11,y+21,4,9);
+		SDL_DrawFilledRect(renderer,x+4,y+29,4,7);
+		SDL_DrawFilledRect(renderer,x+12,y+29,4,7);
+		SDL_DrawFilledRect(renderer,x+9,y+21,2,2);
+		
+		SDL_SetRenderDrawColor(renderer,243,213,150,255);
+		SDL_DrawFilledRect(renderer,x+3,y+21,1,2);
+		SDL_DrawFilledRect(renderer,x+16,y+21,1,2);
+		SDL_DrawFilledRect(renderer,x+7,y+7,6,3);
+		SDL_RenderDrawLine(renderer,x+6,y+3,x+6,y+7);
+		SDL_RenderDrawLine(renderer,x+13,y+4,x+13,y+7);
+		SDL_RenderDrawLine(renderer,x+6,y+4,x+13,y+4);
+		SDL_DrawFilledRect(renderer,x+6,y+3,2,2);
+		SDL_DrawFilledRect(renderer,x+9,y+5,2,2);
+		
+		SDL_SetRenderDrawColor(renderer,100,100,100,255);
+		SDL_DrawFilledRect(renderer,x+7,y+5,2,1);
+		SDL_DrawFilledRect(renderer,x+11,y+5,2,1);
+		SDL_SetRenderDrawColor(renderer,255,255,255,255);
+		SDL_RenderDrawPoint(renderer,x+7,y+6);
+		SDL_RenderDrawPoint(renderer,x+12,y+6);
+		SDL_SetRenderDrawColor(renderer,0,0,0,255);
+		SDL_RenderDrawPoint(renderer,x+8,y+6);
+		SDL_RenderDrawPoint(renderer,x+11,y+6);
+	}
 }
 
 void QuitGame()
 {
-	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -209,9 +268,7 @@ int main(int argc, char* args[])
 	window = SDL_CreateWindow("Journey to Gallas",100,100,640,480,SDL_WINDOW_MAXIMIZED);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	
-	
 	act(1);
-	
 	
 	//退出 
 	SDL_DestroyWindow(window);
