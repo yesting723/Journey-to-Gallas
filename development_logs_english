@@ -2,3 +2,4 @@
 2022.6.8: Added SDL_Image library for image improvements.
 2022.6.12: Completed the control system and added the ESC key exit function.
 2022.7.2: Removed dependency on SDL_Image library and fixed texture problems.
+2022.8.4: Added an image of the back of the main character. When he walk forward, he turns his back to the screen.
